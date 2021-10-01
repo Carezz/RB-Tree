@@ -476,6 +476,17 @@ static void rbtree_delete_fixup(rbtree_ctx* tree, rbtree_node* node)
 	set_color(node, COLOR_BLACK);
 }
 
+static void rbtree_destroy_tree(rbtree_node* node)
+{
+	if (node == NULL)
+		return;
+
+	rbtree_destroy_tree(node->left);
+	rbtree_destroy_tree(node->right);
+
+	bst_destroy_node(node);
+}
+
 void rbtree_init(rbtree_ctx* tree, int (*cmp)(void*, void*))
 {
 	if (tree == NULL || cmp == NULL)
@@ -490,13 +501,8 @@ void rbtree_free(rbtree_ctx* tree)
 {
 	if (tree == NULL)
 		return;
-	/* TODO: traverse the tree and memset + free every single node. */
-	if (tree->root != NULL)
-	{
 
-		free(tree->root);
-	}
-
+	rbtree_destroy_tree(tree->root);
 	memset(tree, 0, sizeof(rbtree_ctx));
 }
 

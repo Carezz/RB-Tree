@@ -47,5 +47,3 @@ void* rbtree_search(rbtree_ctx* tree, void* key);
 int rbtree_exists(rbtree_ctx* tree, void* key);
 
 void rbtree_delete(rbtree_ctx* tree, void* key);
-
-void rbtree_traverse_inorder(rbtree_ctx* tree);
